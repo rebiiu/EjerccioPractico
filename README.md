@@ -1,2 +1,2 @@
 # EjerccioPractico
-Contenido: Diagrama entidad-relación del ejercicio propuesto,
+Contenido: Diagrama entidad-relación del ejercicio propuesto y archivos SQL
