@@ -4,14 +4,14 @@ CREATE DATABASE edu_manage;
 USE edu_manage;
 
 CREATE TABLE tb_profesores(
-id_profesor CHAR(5) PRIMARY KEY DEFAULT UUID(),
+id_profesor CHAR(36) PRIMARY KEY DEFAULT UUID(),
 nombre VARCHAR(100),
 apellido VARCHAR(100),
 correo_electronico VARCHAR(100) unique
 );
 
 CREATE TABLE tb_materias(
-id_materia CHAR(5) PRIMARY KEY DEFAULT UUID(),
+id_materia CHAR(36) PRIMARY KEY DEFAULT UUID(),
 nombre_materia VARCHAR(100),
 grupo_materia CHAR,
 id_profesor CHAR ,
@@ -20,7 +20,7 @@ FOREIGN KEY (id_profesor) REFERENCES tb_profesores(id_profesor)
 );
 
 CREATE TABLE tb_alumnos(
-id_alumno CHAR(5) PRIMARY KEY DEFAULT UUID(),
+id_alumno CHAR(36) PRIMARY KEY DEFAULT UUID(),
 carnet_alumno VARCHAR(10) UNIQUE,
 nombre_alumno VARCHAR(50),
 apellido_alumno VARCHAR(50),
@@ -28,7 +28,7 @@ edad_alumno INT
 );
 
 CREATE TABLE tb_inscripciones(
-id_inscripcion CHAR(5) PRIMARY KEY DEFAULT UUID(),
+id_inscripcion CHAR(36) PRIMARY KEY DEFAULT UUID(),
 id_alumno CHAR,
 id_materia CHAR,
 fecha_inscripcion DATE,
@@ -37,7 +37,7 @@ FOREIGN KEY (id_alumno) REFERENCES tb_alumnos(id_alumno)
 );
 
 CREATE TABLE tb_calificaciones(
-id_calificacion CHAR(5) PRIMARY KEY DEFAULT UUID(),
+id_calificacion CHAR(36) PRIMARY KEY DEFAULT UUID(),
 id_inscripcion CHAR,
 calificacion_final DECIMAL(5,2) CHECK (calificacion_final >= 0),
 fecha_calificacion DATE,
@@ -54,7 +54,7 @@ CREATE PROCEDURE agregar_profesor(
     IN p_correo_electronico VARCHAR(100)
 )
 BEGIN
-    DECLARE p_id_profesor CHAR(5);
+    DECLARE p_id_profesor CHAR(36);
 
     SET p_id_profesor = UUID();
 
@@ -90,11 +90,11 @@ DELIMITER //
 CREATE PROCEDURE agregar_materia(
     IN p_nombre_materia VARCHAR(100),
     IN p_grupo_materia CHAR(1),
-    IN p_id_profesor CHAR(5),
+    IN p_id_profesor CHAR(36),
     IN p_cupos INT
 )
 BEGIN
-    DECLARE p_id_materia CHAR(5);
+    DECLARE p_id_materia CHAR(36);
 
     SET p_id_materia = UUID();
 
@@ -136,7 +136,7 @@ CREATE PROCEDURE insertar_alumno(
     IN p_edad_alumno INT
 )
 BEGIN
-    DECLARE p_id_alumno CHAR(5);
+    DECLARE p_id_alumno CHAR(36);
 
     SET p_id_alumno = UUID();
 
@@ -170,13 +170,13 @@ SELECT * FROM tb_alumnos;
 DELIMITER //
 
 CREATE PROCEDURE insertar_inscripcion(
-    IN p_id_alumno CHAR(5),
-    IN p_id_materia CHAR(5),
+    IN p_id_alumno CHAR(36),
+    IN p_id_materia CHAR(36),
     IN p_fecha_inscripcion DATE,
     IN p_estado ENUM('Activo', 'Inactivo')
 )
 BEGIN
-    DECLARE p_id_inscripcion CHAR(5);
+    DECLARE p_id_inscripcion CHAR(36);
 
     SET p_id_inscripcion = UUID();
 
@@ -211,12 +211,12 @@ SELECT * FROM tb_inscripciones;
 DELIMITER //
 
 CREATE PROCEDURE insertar_calificacion(
-    IN p_id_inscripcion CHAR(5),
+    IN p_id_inscripcion CHAR(36),
     IN p_calificacion_final DECIMAL(5,2),
     IN p_fecha_calificacion DATE
 )
 BEGIN
-    DECLARE p_id_calificacion CHAR(5);
+    DECLARE p_id_calificacion CHAR(36);
 
     SET p_id_calificacion = UUID();
 
